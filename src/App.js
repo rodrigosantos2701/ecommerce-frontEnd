@@ -1,35 +1,39 @@
 import React, { useState, useEffect } from 'react';
+import { Provider, useDispatch } from 'react-redux';
+
+import { store } from './store';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
-import { Navbar, Products, Cart, Checkout, Footer } from './components';
+import { Navbar, Products, Cart, Footer } from './components';
 
 const App = () => {
-  const [mobileOpen, setMobileOpen] = React.useState(false);
   const [products, setProducts] = useState([]);
   const [infodata, setInfodata] = useState([]);
   const [footer, setFooter] = useState([]);
-  const [cart, setCart] = useState({});
+  
+  const [cart, setCart] = useState([]);
   const [order, setOrder] = useState({});
   const [errorMessage, setErrorMessage] = useState('');
 
+
+  
   const fetchProducts = async () => {
-
+    
     const BASE_URL = 'http://localhost:1337/products'; fetch(BASE_URL, { 
-        method: 'get' // opcional 
+      method: 'get' // opcional 
 })
-        .then(function(response) { 
-          response.json().then(function(data){
-            setProducts(data);
-            });
-          })
- 
-        .catch(function(err) { console.error(err); });         
-          };
+.then(function(response) { 
+  response.json().then(function(data){
+    setProducts(data);
+  });
+})
 
-         
+.catch(function(err) { console.error(err); });         
+        };
+
   const fetchInfo = async () => {
-    const BASE_URL = await 'http://localhost:1337/pages'; 
+  const BASE_URL = await 'http://localhost:1337/pages'; 
     await fetch(BASE_URL, { 
         method: 'get' // opcional 
 })
@@ -46,8 +50,6 @@ const App = () => {
         .catch(function(err) { console.error(err); });         
         };
 
-
-
   const fetchFooter = async () => {
       const BASE_URL = await 'http://localhost:1337/footers'; 
       await fetch(BASE_URL, { 
@@ -61,12 +63,13 @@ const App = () => {
                 line3: data[0].line3
               };
               setFooter(footer);
-              console.log('footer====>', footer.line1)
             });
           })
           .catch(function(err) { console.error(err); });         
-          };
+        };
             
+
+
 
   useEffect(() => {
     fetchProducts();
@@ -78,25 +81,29 @@ const App = () => {
 
 
 
-  const handleDrawerToggle = () => setMobileOpen(!mobileOpen);
   return (
     <Router>
-      <div style={{ display: 'flex' }}>
-        <CssBaseline />
-        <Navbar infodata={infodata} />
-        <Switch>
-          <Route exact path="/">
-            <Products products={products}  />
-          </Route>
-          <Route exact path="/cart">
-            <Cart cart={cart}  />
-          </Route>
-          <Route path="/checkout" exact>
-            {/* <Checkout cart={cart} order={order} onCaptureCheckout={} error={errorMessage} /> */}
-          </Route>
-        </Switch>
-      </div>
-        <Footer footer={footer}/>
+      <Provider store={store}>
+              <div style={{ display: 'flex' }}>
+                <CssBaseline />
+
+                <Navbar infodata={infodata} />
+
+                <Switch>
+                  <Route exact path="/">
+                    <Products products={products}  />
+                  </Route>
+
+                  <Route exact path="/cart">
+                    <Cart />
+                  </Route>
+
+                  <Route path="/checkout" exact>
+                  </Route>
+                </Switch>
+              </div>
+                <Footer footer={footer}/>
+      </Provider>
     </Router>
   );
 };

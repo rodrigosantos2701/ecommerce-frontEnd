@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '@material-ui/core';
 import { ShoppingCart } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
-import logo from '../../assets/commerce.png';
+
 import useStyles from './styles';
 
 const PrimarySearchAppBar = ({ infodata }) => {
@@ -17,11 +18,15 @@ const PrimarySearchAppBar = ({ infodata }) => {
   const mobileMenuId = 'primary-search-account-menu-mobile';
 
 
+  const cartSize =  useSelector(state => state.data);
+  
+  
+  
   const renderMobileMenu = (
     <Menu anchorEl={mobileMoreAnchorEl} anchorOrigin={{ vertical: 'top', horizontal: 'right' }} id={mobileMenuId} keepMounted transformOrigin={{ vertical: 'top', horizontal: 'right' }} open={isMobileMenuOpen} onClose={handleMobileMenuClose}>
       <MenuItem>
         <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
-          <Badge badgeContent={'1'} color="secondary">
+          <Badge badgeContent={cartSize.length} color="secondary">
             <ShoppingCart />
           </Badge>
         </IconButton>
@@ -42,7 +47,7 @@ const PrimarySearchAppBar = ({ infodata }) => {
           {location.pathname === '/' && (
           <div className={classes.button}>
             <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
-              <Badge badgeContent={'1'} color="secondary">
+              <Badge badgeContent={cartSize.length} color="secondary">
                 <ShoppingCart />
               </Badge>
             </IconButton>
