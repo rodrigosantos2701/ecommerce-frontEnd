@@ -14,7 +14,18 @@ import Typography from '@material-ui/core/Typography';
 const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
-    backgroundColor: '#DCDCDC',
+    backgroundColor: '#FFF',
+    display:'flex',
+    position: 'relative',
+    bottom: '0',
+    [theme.breakpoints.down('sm')]: {
+      maxHeight: 'none',
+      position: 'unset',
+
+
+    },
+
+    
   },
   list: {
     display: 'flex',
@@ -31,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
   box: {
     display: 'flex',
     flexDirection: 'row',
+    boxSizing: 'border-box',
     [theme.breakpoints.down('sm')]: {
       flexDirection: 'column',
       alignItems: 'left',
@@ -46,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
   color: {
     backgroundColor: '#F50057',
     opacity: 0.9,
+    
   },
 }));
 

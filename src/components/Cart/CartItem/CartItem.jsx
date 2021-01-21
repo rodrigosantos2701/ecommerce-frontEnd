@@ -1,38 +1,94 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
-import { AddShoppingCart } from '@material-ui/icons';
+
+
+import Link from '@material-ui/core/Link';
+import { makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import { Typography, IconButton, Button, Divider } from '@material-ui/core';
+import { AddShoppingitem } from '@material-ui/icons';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import DeleteIcon from '@material-ui/icons/Delete';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
+import Grid from '@material-ui/core/Grid';
 
 import useStyles from './styles';
 
 
-const CartItem = ({cart}) => {
+
+
+function preventDefault(event) {
+  event.preventDefault();
+}  
+
+
+
+const CartItem = ({ item }) => {
+  
+  const dispatch = useDispatch();
+  
+  
+  const onRemoveToCart = () => {
+    dispatch({
+      type: 'DELETE_PRODUCT',
+      payload: item.id
+    })
+  }
+
+  const classes = useStyles();
 
   const [open, setOpen] = useState(false);
-
-  
-  const classes = useStyles();
+  const [total, setTotal] = useState(0);
   
 
-    return (
 
-      <Card className="cart-item">
-        <CardMedia alt={cart.name} className={classes.media} />
-        <CardContent className={classes.cardContent}>
-        <Typography variant="subtitle1">{cart.item}</Typography>
+  return (
+    <>
+      <Grid container spacing={1} >
 
-          <Typography variant="subtitle1">{cart.name}</Typography>
-          <Typography variant="subtitle1">{cart.price}</Typography>
+        <Grid item xs={4} sm={3}>
+          <Paper elevation={0} className={classes.paper}>
+            <Typography >{item.name}</Typography>
+          </Paper>
+        </Grid>
 
-        </CardContent>
-      </Card>
-    );
-  }
+        <Grid item xs={3} sm={3} >
+          <Paper elevation={0} className={classes.paper}>
+            <Typography >{item.quantity}</Typography>
+          </Paper>
+        </Grid>
+
+        <Grid item xs={3} sm={3} >
+          <Paper elevation={0} className={classes.paper}>
+            <Typography >{(item.price*item.quantity).toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
+          </Paper>
+        </Grid>
+
+        <Grid item className={classes.buttons} xs={2} sm={3} >
+
+
+          {/* <IconButton aria-label="add" onClick={''}>
+            <AddCircleOutlineIcon />
+          </IconButton>
+
+          <IconButton aria-label="remove" onClick={() => alert()}>
+            <RemoveCircleOutlineIcon />
+          </IconButton> */}
+          
+          <IconButton aria-label="delete" onClick={onRemoveToCart}>
+            <DeleteIcon />
+          </IconButton>
+        </Grid>
+      </Grid>
+      <Divider className={classes.divider} />
+
+
+    </>
+  );
+}
 
 
 export default CartItem;
