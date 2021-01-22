@@ -1,10 +1,15 @@
 import { createStore } from 'redux';
 
-
+let creditCardHistory = []
+let checkOutHistory = []
 let history = []
 let list = []
+
+
 const INITIAL_STATE = {
   data: [],
+  checkout: {},
+  creditCardData: {},
 
 };
 
@@ -39,15 +44,29 @@ function productsReducer(state = INITIAL_STATE, action) {
       }
       break;
 
+      case 'ADD_CHECKOUT':
+            state = {
+            ...state,
+          }
+          let checkOutHistory = action
+          return { ...state, checkout: checkOutHistory }
+          break;
 
-//  TO DO => ADICIONAR ADD-ITEM E REMOVE ITEM LINCADO COM O CART        
+          case 'ADD_CREDIT_CARD':
+            state = {
+            ...state,
+          }
+          let creditCardHistory = action
+          return { ...state, creditCardData: creditCardHistory }
+          break;
+
+
 
     default:
       return state;
 
   }
 }
-
 
 
 

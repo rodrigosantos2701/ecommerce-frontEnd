@@ -16,11 +16,12 @@ import DeleteIcon from '@material-ui/icons/Delete';
 import CartItem from './CartItem/CartItem';
 import useStyles from './styles';
 
-const Cart = ({onAddToCart}) => {
+const Cart = () => {
 
   const classes = useStyles();
 
   const cartData = useSelector(state => state.data);
+  
 
   const [totalPrice, setTotalPrice] = useState(0);
 
@@ -73,7 +74,7 @@ const Cart = ({onAddToCart}) => {
         <Grid item xs={12}>
           {cartData.map((cartData) => (
             <Grid key={cartData.id} >
-                <CartItem item={cartData} onAddToCart={onAddToCart} />
+                <CartItem item={cartData}  />
             </Grid>
           ))}
 
@@ -90,7 +91,7 @@ const Cart = ({onAddToCart}) => {
       <Grid container className={classes.buttonContainer} spacing={1} >
 
         <Grid item xs={12} sm={6} lg={4}>
-            <Button className={classes.buttonCart} component={ Link } to="/" variant="contained" color="secondary">Voltar para loja</Button>
+            <Button className={classes.buttonCart} component={ Link } to="/" variant="contained">Voltar para loja</Button>
         </Grid>
         {/* <Grid item xs={12} sm={4} lg={4}>
           <Button className={classes.buttonCart} variant="contained" color="secondary">Esvaziar carrinho</Button>

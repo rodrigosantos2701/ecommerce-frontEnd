@@ -5,21 +5,9 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
+import { useSelector } from 'react-redux';
 
-const products = [
-  { name: 'Product 1', desc: 'A nice thing', price: '$9.99' },
-  { name: 'Product 2', desc: 'Another thing', price: '$3.45' },
-  { name: 'Product 3', desc: 'Something else', price: '$6.51' },
-  { name: 'Product 4', desc: 'Best thing of all', price: '$14.11' },
-  { name: 'Shipping', desc: '', price: 'Free' },
-];
-const addresses = ['1 Material-UI Drive', 'Reactville', 'Anytown', '99999', 'USA'];
-const payments = [
-  { name: 'Card type', detail: 'Visa' },
-  { name: 'Card holder', detail: 'Mr John Smith' },
-  { name: 'Card number', detail: 'xxxx-xxxx-xxxx-1234' },
-  { name: 'Expiry date', detail: '04/2024' },
-];
+
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -35,14 +23,18 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Review() {
   const classes = useStyles();
-
-  return (
+  const checkoutData = useSelector(state => state.checkout);
+  const cartData = useSelector(state => state.data);
+  const creditCardData = useSelector(state => state.creditCardData);
+  console.log('===>', creditCardData)
+  
+   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
-        Order summary
+        Revisão do pedido
       </Typography>
       <List disablePadding>
-        {products.map((product) => (
+        {cartData.map((product) => (
           <ListItem className={classes.listItem} key={product.name}>
             <ListItemText primary={product.name} secondary={product.desc} />
             <Typography variant="body2">{product.price}</Typography>
@@ -58,26 +50,46 @@ export default function Review() {
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Shipping
+            Envio
           </Typography>
-          <Typography gutterBottom>John Smith</Typography>
-          <Typography gutterBottom>{addresses.join(', ')}</Typography>
+          <Typography gutterBottom> {checkoutData.name}</Typography>
+          <Typography gutterBottom>{checkoutData.address}</Typography>
         </Grid>
         <Grid item container direction="column" xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Payment details
+            Detalhes do pagamento
           </Typography>
           <Grid container>
-            {payments.map((payment) => (
-              <React.Fragment key={payment.name}>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.name}</Typography>
+                <Grid item xs={4}>
+                  <Typography gutterBottom>{'Cartão'}</Typography>
                 </Grid>
-                <Grid item xs={6}>
-                  <Typography gutterBottom>{payment.detail}</Typography>
+                <Grid item xs={8}>
+                  <Typography gutterBottom>{'Visa'}</Typography>
                 </Grid>
-              </React.Fragment>
-            ))}
+          </Grid>
+          <Grid container>
+                <Grid item xs={4}>
+                  <Typography gutterBottom>{'Nome'}</Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography gutterBottom>{creditCardData.creditCardName}</Typography>
+                </Grid>
+          </Grid>
+          <Grid container>
+                <Grid item xs={4}>
+                  <Typography gutterBottom>{'Número'}</Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography gutterBottom>{creditCardData.creditCardNumber}</Typography>
+                </Grid>
+          </Grid>
+          <Grid container>
+                <Grid item xs={4}>
+                  <Typography gutterBottom>{'Validade'}</Typography>
+                </Grid>
+                <Grid item xs={8}>
+                  <Typography gutterBottom>{creditCardData.validate}</Typography>
+                </Grid>
           </Grid>
         </Grid>
       </Grid>

@@ -1,5 +1,4 @@
 import React from 'react';
-import {useSelector} from 'react-redux'
 
 import Grid from '@material-ui/core/Grid';
 
@@ -10,7 +9,6 @@ import useStyles from './styles';
 
 const Products = ({products}) => {
   const classes = useStyles();
-  const cartData = useSelector(state => state.data);
 
 
   
@@ -22,7 +20,7 @@ const Products = ({products}) => {
       <Grid container justify="center" spacing={4}>
         {products.map((product) => (
           <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
-            <Product product={product} cartData={cartData} />
+            <Product product={product}  />
           </Grid>
         ))}
       </Grid>

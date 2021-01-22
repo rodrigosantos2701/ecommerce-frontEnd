@@ -119,6 +119,8 @@ const Product = ({ product }) => {
     setTimeout(function () { 
       setDisableRemovetoCart(false)
       setDisableAddtoCart(false)
+      setDisableAddtoShop(false);
+
     }, 1000);
   }
 
@@ -157,7 +159,7 @@ const Product = ({ product }) => {
       </CardActions>
 
       <Snackbar open={open} autoHideDuration={timeInfo} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Alert onClose={handleClose} severity="info"  >
+        <Alert onClose={handleClose} severity="warning"  >
           Atingiu a quantidade máxima em estoque
         </Alert>
       </Snackbar>
@@ -173,7 +175,7 @@ const Product = ({ product }) => {
         </Alert>
       </Snackbar>
       <Snackbar open={openRemove} autoHideDuration={timeInfo} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>
-        <Alert onClose={handleClose} severity="warning"  >
+        <Alert onClose={handleClose} severity="info"  >
           Produto removido !
         </Alert>
       </Snackbar>

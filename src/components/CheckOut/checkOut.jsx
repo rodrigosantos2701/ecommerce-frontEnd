@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -13,19 +13,10 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './addressForm';
 import PaymentForm from './paymentForm';
 import Review from './review';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -63,38 +54,50 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const steps = ['Shipping address', 'Payment details', 'Review your order'];
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <AddressForm />;
-    case 1:
-      return <PaymentForm />;
-    case 2:
-      return <Review />;
-    default:
-      throw new Error('Unknown step');
-  }
-}
+
+
 
 export default function Checkout() {
+  
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
+  
+  const steps = ['Envio', 'Pagamento', 'Revisão'];
+  function getStepContent(step) {
+    switch (step) {
+      case 0:
+        return <AddressForm activeStep={step} />;
+      case 1:
+        return <PaymentForm />;
+      case 2:
+        return <Review />;
+      default:
+        throw new Error('Unknown step');
+    }
+  }
 
+
+  
   const handleNext = () => {
     setActiveStep(activeStep + 1);
   };
-
+  
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
+
+  useEffect(()=>{
+
+
+  },[])
+
 
   return (
     <React.Fragment>
       {/* <CssBaseline /> */}
       <main className={classes.layout}>
         <Paper className={classes.paper}>
-          <Typography component="h1" variant="h4" align="center">
+          <Typography component="h1" variant="h5" align="center">
             Checkout
           </Typography>
           <Stepper activeStep={activeStep} className={classes.stepper}>
@@ -108,11 +111,11 @@ export default function Checkout() {
             {activeStep === steps.length ? (
               <React.Fragment>
                 <Typography variant="h5" gutterBottom>
-                  Thank you for your order.
+                  Obrigado Pelo seu pedido.
                 </Typography>
                 <Typography variant="subtitle1">
-                  Your order number is #2001539. We have emailed your order confirmation, and will
-                  send you an update when your order has shipped.
+                  O seu numero de pedido é #2001539. Enviamos um e-mail de confirmação, e assim 
+                  que o pedido for enviado, você vai receber um e-mail de confirmação de envio.
                 </Typography>
               </React.Fragment>
             ) : (
@@ -120,8 +123,8 @@ export default function Checkout() {
                 {getStepContent(activeStep)}
                 <div className={classes.buttons}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} className={classes.button}>
-                      Back
+                    <Button onClick={handleBack} className={classes.button} variant="contained">
+                      Voltar
                     </Button>
                   )}
                   <Button
@@ -130,14 +133,14 @@ export default function Checkout() {
                     onClick={handleNext}
                     className={classes.button}
                   >
-                    {activeStep === steps.length - 1 ? 'Place order' : 'Next'}
+                    {activeStep === steps.length - 1 ? 'Enviar pedido' : 'Continuar'}
                   </Button>
                 </div>
               </React.Fragment>
             )}
           </React.Fragment>
         </Paper>
-        <Copyright />
+        {/* <Copyright /> */}
       </main>
     </React.Fragment>
   );
