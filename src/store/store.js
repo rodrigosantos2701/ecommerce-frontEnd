@@ -10,7 +10,8 @@ const INITIAL_STATE = {
   data: [],
   checkout: {},
   creditCardData: {},
-
+  activeButtonDisable: true,
+  pix: true
 };
 
 function productsReducer(state = INITIAL_STATE, action) {
@@ -60,8 +61,14 @@ function productsReducer(state = INITIAL_STATE, action) {
           return { ...state, creditCardData: creditCardHistory }
           break;
 
+      case 'SET_ACTIVE_BUTTON':
+        return { ...state, activeButtonDisable: action.payload }
+        break;
 
-
+        case 'SET_PIX':
+          return { ...state, pix: action.payload }
+          break;
+  
     default:
       return state;
 

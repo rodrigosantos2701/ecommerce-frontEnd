@@ -13,8 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import AddressForm from './addressForm';
 import PaymentForm from './paymentForm';
 import Review from './review';
-import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 
@@ -59,6 +58,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Checkout() {
   
+
+  const activeButtonDisable = useSelector(state => state.activeButtonDisable);
+  const dispatch = useDispatch();
+
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   
@@ -76,7 +79,6 @@ export default function Checkout() {
     }
   }
 
-
   
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -86,12 +88,13 @@ export default function Checkout() {
     setActiveStep(activeStep - 1);
   };
 
-  useEffect(()=>{
-
-
-  },[])
-
-
+  // const  onActiveButton = () => {
+  //   dispatch({
+  //     type: 'SET_ACTIVE_BUTTON',
+  //     payload: true,
+  //   })
+  // };
+  
   return (
     <React.Fragment>
       {/* <CssBaseline /> */}
@@ -132,6 +135,7 @@ export default function Checkout() {
                     color="primary"
                     onClick={handleNext}
                     className={classes.button}
+                    disabled={activeButtonDisable}
                   >
                     {activeStep === steps.length - 1 ? 'Enviar pedido' : 'Continuar'}
                   </Button>

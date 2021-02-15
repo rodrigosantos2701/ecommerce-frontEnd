@@ -9,6 +9,8 @@ import { useSelector } from 'react-redux';
 
 
 
+
+
 const useStyles = makeStyles((theme) => ({
   listItem: {
     padding: theme.spacing(1, 0),
@@ -26,9 +28,10 @@ export default function Review() {
   const checkoutData = useSelector(state => state.checkout);
   const cartData = useSelector(state => state.data);
   const creditCardData = useSelector(state => state.creditCardData);
-  console.log('===>', creditCardData)
-  
-   return (
+  const pixPaymentState = useSelector(state => state.pix)
+
+
+  return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
         Revisão do pedido
@@ -52,47 +55,64 @@ export default function Review() {
           <Typography variant="h6" gutterBottom className={classes.title}>
             Envio
           </Typography>
-          <Typography gutterBottom> {checkoutData.name}</Typography>
           <Typography gutterBottom>{checkoutData.address}</Typography>
+          <Typography gutterBottom>{checkoutData.referency}</Typography>
+          <Typography gutterBottom>{checkoutData.neighbor}</Typography>
+          <Typography gutterBottom>{checkoutData.city}</Typography>
+          <Typography gutterBottom>{checkoutData.stateAddress}</Typography>
+          <Typography gutterBottom>{checkoutData.cep}</Typography>
         </Grid>
-        <Grid item container direction="column" xs={12} sm={6}>
-          <Typography variant="h6" gutterBottom className={classes.title}>
-            Detalhes do pagamento
-          </Typography>
-          <Grid container>
-                <Grid item xs={4}>
-                  <Typography gutterBottom>{'Cartão'}</Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography gutterBottom>{'Visa'}</Typography>
-                </Grid>
+
+
+        {!pixPaymentState ?
+          <Grid item container direction="column" xs={12} sm={6}>
+            <Typography variant="h6" gutterBottom className={classes.title}>
+              Detalhes do pagamento
+              </Typography>
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography gutterBottom>{'Cartão'}</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography gutterBottom>{'Visa'}</Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography gutterBottom>{'Nome'}</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography gutterBottom>{creditCardData.creditCardName}</Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography gutterBottom>{'Número'}</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography gutterBottom>{creditCardData.creditCardNumber}</Typography>
+              </Grid>
+            </Grid>
+            <Grid container>
+              <Grid item xs={4}>
+                <Typography gutterBottom>{'Validade'}</Typography>
+              </Grid>
+              <Grid item xs={8}>
+                <Typography gutterBottom>{creditCardData.validate}</Typography>
+              </Grid>
+            </Grid>
           </Grid>
-          <Grid container>
-                <Grid item xs={4}>
-                  <Typography gutterBottom>{'Nome'}</Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography gutterBottom>{creditCardData.creditCardName}</Typography>
-                </Grid>
-          </Grid>
-          <Grid container>
-                <Grid item xs={4}>
-                  <Typography gutterBottom>{'Número'}</Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography gutterBottom>{creditCardData.creditCardNumber}</Typography>
-                </Grid>
-          </Grid>
-          <Grid container>
-                <Grid item xs={4}>
-                  <Typography gutterBottom>{'Validade'}</Typography>
-                </Grid>
-                <Grid item xs={8}>
-                  <Typography gutterBottom>{creditCardData.validate}</Typography>
-                </Grid>
-          </Grid>
+          : 
+
+          <Grid item container alignItems={'center'} xs={12} sm={6}>
+              <Typography variant="h6" gutterBottom className={classes.title}>
+                Pagamento Pix
+              </Typography>
         </Grid>
+
+          }
       </Grid>
+
     </React.Fragment>
   );
 }
