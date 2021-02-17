@@ -40,10 +40,6 @@ const CartItem = ({ item }) => {
 
   const classes = useStyles();
 
-  const [open, setOpen] = useState(false);
-  const [total, setTotal] = useState(0);
-  
-
 
   return (
     <>
@@ -68,15 +64,6 @@ const CartItem = ({ item }) => {
         </Grid>
 
         <Grid item className={classes.buttons} xs={2} sm={3} >
-
-
-          {/* <IconButton aria-label="add" onClick={''}>
-            <AddCircleOutlineIcon />
-          </IconButton>
-
-          <IconButton aria-label="remove" onClick={() => alert()}>
-            <RemoveCircleOutlineIcon />
-          </IconButton> */}
           
           <IconButton aria-label="delete" onClick={onRemoveToCart}>
             <DeleteIcon />

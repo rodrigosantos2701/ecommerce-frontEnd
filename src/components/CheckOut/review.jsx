@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
@@ -6,8 +6,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import Grid from '@material-ui/core/Grid';
 import { useSelector } from 'react-redux';
-
-
+import Paper from '@material-ui/core/Paper';
 
 
 
@@ -23,37 +22,119 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+
+
+
+
 export default function Review() {
   const classes = useStyles();
   const checkoutData = useSelector(state => state.checkout);
   const cartData = useSelector(state => state.data);
   const creditCardData = useSelector(state => state.creditCardData);
   const pixPaymentState = useSelector(state => state.pix)
+  const [subTotalPrice, setSubTotalPrice] = useState(0);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [frete, setFrete] = useState('');
+
+
+
+
+  const fetchFrete = async () => {
+    let count = 0
+
+    const BASE_URL = await 'http://localhost:1337/fretes';
+    await fetch(BASE_URL, {
+      method: 'get' // opcional 
+    })
+      .then(function (response) {
+        response.json().then(function (data) {
+          const frete = {
+            precoNormal: data[0].precoNormal,
+            valorParaFreteGratis: data[0].valorParaFreteGratis
+          }
+          {
+            cartData.map((cartData) => (
+              count = (count + cartData.price * cartData.quantity) || '9999'
+            ))
+          }
+          setSubTotalPrice(count)
+
+          if (count < frete.valorParaFreteGratis) {
+            setTotalPrice(count + frete.precoNormal)
+            setFrete(frete.precoNormal)
+          }
+          else {
+            setTotalPrice(count)
+            setFrete(frete.precoNormal)
+
+          }
+
+        });
+      })
+      .catch(function (err) { console.error(err); });
+  };
+
+  useEffect(() => {
+    fetchFrete()
+  }, []);
 
 
   return (
     <React.Fragment>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom className={classes.title}>
         Revisão do pedido
       </Typography>
-      <List disablePadding>
-        {cartData.map((product) => (
-          <ListItem className={classes.listItem} key={product.name}>
-            <ListItemText primary={product.name} secondary={product.desc} />
-            <Typography variant="body2">{product.price}</Typography>
-          </ListItem>
+
+
+      <Grid container spacing={2} className={classes.title}>
+
+        {cartData.map((cartData) => (
+          <Grid container  >
+
+            <Grid item xs={1} sm={1}>
+            </Grid>
+            <Grid item xs={5} sm={5} >
+              <Paper elevation={0} className={classes.paper}>
+                <Typography >{cartData.name}</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={2} sm={2} >
+              <Paper elevation={0} className={classes.paper}>
+                <Typography >{cartData.quantity}</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={3} sm={3}  >
+              <Paper elevation={0} className={classes.paper}>
+                <Typography >{(cartData.price * cartData.quantity).toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
+              </Paper>
+            </Grid>
+
+            <Grid item xs={1} sm={1}>
+            </Grid>
+
+          </Grid>
         ))}
-        <ListItem className={classes.listItem}>
-          <ListItemText primary="Total" />
-          <Typography variant="subtitle1" className={classes.total}>
-            $34.06
-          </Typography>
-        </ListItem>
-      </List>
+
+      </Grid>
+
+      <Grid container spacing={2} className={classes.title} >
+        <Grid item xs={12} sm={12}  >
+          <Typography variant="body1" gutterBottom  >Subtotal: {subTotalPrice.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
+          {subTotalPrice !== totalPrice?
+          <Typography variant="body1" gutterBottom  >Frete: {frete.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
+          :
+          <Typography variant="body1" gutterBottom  >Frete: <span style={{color:'#FF0000' , textDecoration: 'line-through'}}>{frete.toLocaleString('pt-br', { minimumFractionDigits: 2 })} </span> Grátis</Typography>
+        }
+          <Typography variant="body1" gutterBottom  >Total: {totalPrice.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
+        </Grid>
+      </Grid>
+
       <Grid container spacing={2}>
         <Grid item xs={12} sm={6}>
           <Typography variant="h6" gutterBottom className={classes.title}>
-            Envio
+            Detalhes do envio
           </Typography>
           <Typography gutterBottom>{checkoutData.address}</Typography>
           <Typography gutterBottom>{checkoutData.referency}</Typography>
@@ -102,15 +183,15 @@ export default function Review() {
               </Grid>
             </Grid>
           </Grid>
-          : 
+          :
 
           <Grid item container alignItems={'center'} xs={12} sm={6}>
-              <Typography variant="h6" gutterBottom className={classes.title}>
-                Pagamento Pix
+            <Typography variant="h6" gutterBottom className={classes.title}>
+              Pagamento Pix
               </Typography>
-        </Grid>
+          </Grid>
 
-          }
+        }
       </Grid>
 
     </React.Fragment>

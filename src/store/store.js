@@ -45,30 +45,30 @@ function productsReducer(state = INITIAL_STATE, action) {
       }
       break;
 
-      case 'ADD_CHECKOUT':
-            state = {
-            ...state,
-          }
-          let checkOutHistory = action
-          return { ...state, checkout: checkOutHistory }
-          break;
+    case 'ADD_CHECKOUT':
+      state = {
+        ...state,
+      }
+      let checkOutHistory = action
+      return { ...state, checkout: checkOutHistory }
+      break;
 
-          case 'ADD_CREDIT_CARD':
-            state = {
-            ...state,
-          }
-          let creditCardHistory = action
-          return { ...state, creditCardData: creditCardHistory }
-          break;
+    case 'ADD_CREDIT_CARD':
+      state = {
+        ...state,
+      }
+      let creditCardHistory = action
+      return { ...state, creditCardData: creditCardHistory }
+      break;
 
-      case 'SET_ACTIVE_BUTTON':
-        return { ...state, activeButtonDisable: action.payload }
-        break;
+    case 'SET_ACTIVE_BUTTON':
+      return { ...state, activeButtonDisable: action.payload }
+      break;
 
-        case 'SET_PIX':
-          return { ...state, pix: action.payload }
-          break;
-  
+    case 'SET_PIX':
+      return { ...state, pix: action.payload }
+      break;
+
     default:
       return state;
 
