@@ -3,6 +3,7 @@ import { AppBar, Toolbar, IconButton, Badge, MenuItem, Menu, Typography } from '
 import { ShoppingCart } from '@material-ui/icons';
 import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import Button from '@material-ui/core/Button';
 
 
 import useStyles from './styles';
@@ -46,6 +47,20 @@ const PrimarySearchAppBar = ({ infodata }) => {
           <div className={classes.grow} />
           {location.pathname === '/' && (
           <div className={classes.button}>
+
+                      <Button 
+                          component={Link} 
+                          to="/cart" 
+                          aria-label="Show cart items"
+                          color="inherit"
+                          variant="contained"
+                          color="secondary"
+                          className={classes.button}
+                          // startIcon={<ShoppingCart />}
+                      >
+                          Ir para carrinho
+                      </Button>
+
             <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
               <Badge badgeContent={cartSize.length} color="secondary">
                 <ShoppingCart />

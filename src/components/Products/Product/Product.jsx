@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
+import Button from '@material-ui/core/Button';
 
 import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
@@ -29,7 +30,8 @@ const Product = ({ product }) => {
         id: product.id,
         name: product.name,
         price: product.price,
-        quantity: item,
+        purchase: 1,
+        quantity: product.quantity
       })
 
 
@@ -83,6 +85,17 @@ const Product = ({ product }) => {
       setOpenRemoveZeroItens(true)
       interval()
     }
+   else if (item === 1){
+      setItem(item - 1)
+      // setOpenRemove(true)
+      setDisableRemovetoCart(true)
+      setDisableAddtoCart(true)
+      setDisableAddtoShop(true)
+
+      intervalDisableCart()
+
+   
+   }
     else {
       // (item !== 0)
       setItem(item - 1)
@@ -91,7 +104,7 @@ const Product = ({ product }) => {
       setDisableAddtoCart(true)
       setDisableAddtoShop(true)
 
-      interval()
+      // interval()
     }
   }
 
@@ -124,7 +137,15 @@ const Product = ({ product }) => {
     }, 1000);
   }
 
+  const intervalDisableCart = () => {
+    setTimeout(function () { 
+      setDisableRemovetoCart(false)
+      setDisableAddtoCart(true)
+      setDisableAddtoShop(true);
 
+    }, 1000);
+  }
+  
   return (
     <Card className={classes.root}>
       <CardMedia className={classes.media} image={product.image} title={product.name} />
@@ -141,21 +162,15 @@ const Product = ({ product }) => {
       </CardContent>
 
       <CardActions disableSpacing className={classes.cardActions}>
-          <IconButton disabled={disableAddtoCart} aria-label="Add item" onClick={handleProductAdd}>
-            <AddCircleOutlineIcon />
-          </IconButton>
 
-          <Typography component="h2">
-            {item}
-          </Typography>
-
-          <IconButton disabled={disableRemovetoCart} aria-label="Remove item" onClick={handleProductRemove} >
-            <RemoveCircleOutlineIcon />
-          </IconButton>
-          
-          <IconButton disabled={disableAddtoShop} aria-label="Add to Cart" onClick={handleAddtoShop}>
-            <AddShoppingCart />
-          </IconButton>
+        <Button disabled={false} aria-label="Add to Cart" onClick={handleAddtoShop}
+              variant="contained"
+              color="secondary"
+              className={classes.button}
+              startIcon={<AddShoppingCart />}
+      >
+        Adicionar
+      </Button>
       </CardActions>
 
       <Snackbar open={open} autoHideDuration={timeInfo} onClose={handleClose} anchorOrigin={{ vertical: 'top', horizontal: 'center' }}>

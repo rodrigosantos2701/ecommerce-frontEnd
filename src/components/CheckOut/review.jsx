@@ -54,7 +54,7 @@ export default function Review() {
           }
           {
             cartData.map((cartData) => (
-              count = (count + cartData.price * cartData.quantity) || '9999'
+              count = (count + cartData.price * cartData.purchase) || ''
             ))
           }
           setSubTotalPrice(count)
@@ -101,13 +101,13 @@ export default function Review() {
 
             <Grid item xs={2} sm={2} >
               <Paper elevation={0} className={classes.paper}>
-                <Typography >{cartData.quantity}</Typography>
+                <Typography >{cartData.purchase}</Typography>
               </Paper>
             </Grid>
 
             <Grid item xs={3} sm={3}  >
               <Paper elevation={0} className={classes.paper}>
-                <Typography >{(cartData.price * cartData.quantity).toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
+                <Typography >{(cartData.price * cartData.purchase).toLocaleString('pt-br', { minimumFractionDigits: 2 })}</Typography>
               </Paper>
             </Grid>
 

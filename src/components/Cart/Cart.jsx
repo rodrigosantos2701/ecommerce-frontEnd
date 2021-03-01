@@ -13,6 +13,7 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
 
 
+
 import CartItem from './CartItem/CartItem';
 import useStyles from './styles';
 
@@ -24,13 +25,13 @@ const Cart = () => {
   
 
   const [totalPrice, setTotalPrice] = useState(0);
-
+  
   const handleTotalPrice = () => {
     
     let count = 0
     {
       cartData.map((cartData) => (
-        count = (count + cartData.price * cartData.quantity) || '9999'
+        count = (count + cartData.price * cartData.purchase) || ''
         ))
       }
       setTotalPrice(count)
@@ -58,10 +59,10 @@ const Cart = () => {
     <main className={classes.content}>
       <div className={classes.toolbar} />
       <Grid container spacing={2} >
-        <Grid item xs={5} sm={3}>
+        <Grid item xs={4} sm={3}>
           <Typography className={classes.paper}>Item</Typography>
         </Grid>
-        <Grid item xs={3} sm={3}>
+        <Grid item xs={4} sm={3}>
           <Typography className={classes.paper}>Quant</Typography>
         </Grid>
         <Grid item xs={4} sm={3}>
@@ -110,6 +111,7 @@ const Cart = () => {
       <Typography className={classes.title} variant="h5" gutterBottom>Your Shopping Cart</Typography>
       <div>
         {cartData.length === 0 ? renderEmptyCart() : renderCart()}
+        
       </div>
     </Container>
   );

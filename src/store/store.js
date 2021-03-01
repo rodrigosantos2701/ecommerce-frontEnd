@@ -4,6 +4,7 @@ let creditCardHistory = []
 let checkOutHistory = []
 let history = []
 let list = []
+let newData = []
 
 
 const INITIAL_STATE = {
@@ -11,34 +12,22 @@ const INITIAL_STATE = {
   checkout: {},
   creditCardData: {},
   activeButtonDisable: true,
-  pix: true
+  pix: true,
+
 };
 
 function productsReducer(state = INITIAL_STATE, action) {
   switch (action.type) {
+
     case 'ADD_PRODUCT':
-      let found = list.includes(action.name)
-
-
-      if (!found) {
-        list.push(action.name)
-        return { ...state, data: [...state.data, action] }
-        break;
-
-      }
-      else {
-        state = {
+      return {
           ...state,
-          data: state.data.filter((data, index) => data.id !== action.id),
-        }
-        let history = state.data.concat(action)
-        return { ...state, data: history }
-        break;
-      }
+        data: [...state.data, action ]
+    }
+    break;
 
 
     case 'DELETE_PRODUCT':
-      list.splice(list.indexOf(action.name), 1);
       return {
         ...state,
         data: state.data.filter((data, index) => data.id !== action.payload)
@@ -69,6 +58,22 @@ function productsReducer(state = INITIAL_STATE, action) {
       return { ...state, pix: action.payload }
       break;
 
+    case 'ADD_QUANTITY':
+      let index = state.data.findIndex((data => data.id == action.id));
+      newData = [...state.data];
+      newData[index].purchase = action.purchase
+      return { ...state, data: newData }
+      break;
+  
+    break;
+    
+    case 'REMOVE_QUANTITY':
+      let objIndex = state.data.findIndex((data => data.id == action.id));
+      newData = [...state.data];
+      newData[objIndex].purchase = action.purchase
+      return { ...state, data: newData }
+      break;
+  
     default:
       return state;
 
