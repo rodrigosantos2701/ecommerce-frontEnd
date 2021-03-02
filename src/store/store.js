@@ -59,7 +59,7 @@ function productsReducer(state = INITIAL_STATE, action) {
       break;
 
     case 'ADD_QUANTITY':
-      let index = state.data.findIndex((data => data.id == action.id));
+      let index = state.data.findIndex((data => data.id === action.id));
       newData = [...state.data];
       newData[index].purchase = action.purchase
       return { ...state, data: newData }

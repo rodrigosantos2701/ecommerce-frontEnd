@@ -23,9 +23,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-
-
-
 export default function Review() {
   const classes = useStyles();
   const checkoutData = useSelector(state => state.checkout);
@@ -35,7 +32,6 @@ export default function Review() {
   const [subTotalPrice, setSubTotalPrice] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
   const [frete, setFrete] = useState('');
-
 
 
 

@@ -21,6 +21,7 @@ const PrimarySearchAppBar = ({ infodata }) => {
 
   const cartSize =  useSelector(state => state.data);
   
+
   
   
   const renderMobileMenu = (
@@ -46,21 +47,19 @@ const PrimarySearchAppBar = ({ infodata }) => {
           </Typography>
           <div className={classes.grow} />
           {location.pathname === '/' && (
-          <div className={classes.button}>
-
+          <div>
                       <Button 
+                          className={classes.buttonCart}
                           component={Link} 
                           to="/cart" 
                           aria-label="Show cart items"
                           color="inherit"
                           variant="contained"
                           color="secondary"
-                          className={classes.button}
                           // startIcon={<ShoppingCart />}
                       >
                           Ir para carrinho
                       </Button>
-
             <IconButton component={Link} to="/cart" aria-label="Show cart items" color="inherit">
               <Badge badgeContent={cartSize.length} color="secondary">
                 <ShoppingCart />

@@ -1,13 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import Button from '@material-ui/core/Button';
 
-import { Card, CardMedia, CardContent, CardActions, Typography, IconButton } from '@material-ui/core';
+import { Card, CardMedia, CardContent, CardActions, Typography } from '@material-ui/core';
 import { AddShoppingCart } from '@material-ui/icons';
-import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
@@ -50,64 +48,15 @@ const Product = ({ product }) => {
   const [disableAddtoCart, setDisableAddtoCart] = useState(false);
   const [disableRemovetoCart, setDisableRemovetoCart] = useState(false);
   const [disableAddtoShop, setDisableAddtoShop] = useState(true);
-  const [upDateButton, setUpDateButton] = useState(false);
 
 
   const timeInfo = 2000;
 
 
-  
-
 
   function Alert(props) {
     return <MuiAlert elevation={6} variant="filled" {...props} />;
   }
-
-  const handleProductAdd = () => {
-
-    if (product.quantity > item) {
-      setItem(item + 1)
-      setDisableRemovetoCart(true)
-      setDisableAddtoCart(true)
-      setDisableAddtoShop(false)
-      interval()
-    }
-    else {
-      setOpen(true)
-      setDisableRemovetoCart(true)
-      setDisableAddtoCart(true)
-      interval()
-    }
-  }
-
-  const handleProductRemove = () => {
-    if (item === 0) {
-      setOpenRemoveZeroItens(true)
-      interval()
-    }
-   else if (item === 1){
-      setItem(item - 1)
-      // setOpenRemove(true)
-      setDisableRemovetoCart(true)
-      setDisableAddtoCart(true)
-      setDisableAddtoShop(true)
-
-      intervalDisableCart()
-
-   
-   }
-    else {
-      // (item !== 0)
-      setItem(item - 1)
-      // setOpenRemove(true)
-      setDisableRemovetoCart(true)
-      setDisableAddtoCart(true)
-      setDisableAddtoShop(true)
-
-      // interval()
-    }
-  }
-
   const handleAddtoShop = () => {
   
     setDisableAddtoShop(true);

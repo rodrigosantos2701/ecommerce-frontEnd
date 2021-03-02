@@ -65,4 +65,11 @@ export default makeStyles((theme) => ({
       width: '20ch',
     },
   },
+  buttonCart: {
+    [theme.breakpoints.down('md')]: {
+      display: 'none',
+    },
+
+
+  }
 }));

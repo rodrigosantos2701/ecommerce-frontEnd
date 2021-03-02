@@ -1,13 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
 
-import Link from '@material-ui/core/Link';
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import { Typography, IconButton, Button, Divider } from '@material-ui/core';
-import { AddShoppingitem } from '@material-ui/icons';
+import { Typography, IconButton, Divider } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -17,13 +12,6 @@ import Grid from '@material-ui/core/Grid';
 
 
 import useStyles from './styles';
-import { Item } from 'semantic-ui-react';
-
-
-
-function preventDefault(event) {
-  event.preventDefault();
-}  
 
 const CartItem = ({ item }) => {
   

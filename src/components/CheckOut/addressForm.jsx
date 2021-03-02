@@ -1,12 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import TextField from '@material-ui/core/TextField';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import Checkbox from '@material-ui/core/Checkbox';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Validators from '../../validates/validates';
 import InputMask from "react-input-mask"
 
@@ -19,10 +17,7 @@ export default function AddressForm() {
   const [lastName, setLastName] = useState('')
   const [email, setEmail] = useState('')
   const [emailConfirm, setEmailConfirm] = useState('')
-  const [address, setAddress] = useState('')
   const [referency, setReferency] = useState('')
-  const [city, setCity] = useState('')
-  const [stateAddress, setStateAddress] = useState('')
   const [cep, setCep] = useState('')
   const [whatsApp, setWhatsApp] = useState('')
   const [viaCep, setViaCep] = useState('')
